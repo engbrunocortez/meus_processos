@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Meus Processos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f4f6;--surface:#fff;--surface2:#f8f9fb;--text:#15171c;--muted:#5d6471;--line:#e2e5ea;
+  --accent:#1f5fbf;--accent-soft:#e8effb;--ok:#1b7a43;--ok-soft:#e4f3ea;--warn:#9a5800;--warn-soft:#fcf0dc;
+  --bad:#b42318;--bad-soft:#fcebea;--info:#5a3eb5;--info-soft:#efeafb;--radius:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101216;--surface:#191c22;--surface2:#1f232a;--text:#e7e9ed;--muted:#99a0ac;--line:#2b3039;
+    --accent:#6ea3ff;--accent-soft:#1c2940;--ok:#5cc98a;--ok-soft:#163022;--warn:#f0b35a;--warn-soft:#33260e;
+    --bad:#ff7b72;--bad-soft:#391a18;--info:#b39dff;--info-soft:#251f3f;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Inter,system-ui,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:20px 16px 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+h1{font-size:22px;margin:0;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:13px}
+.btns{display:flex;gap:8px}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:8px;padding:7px 12px}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+.kpi b{display:block;font-size:24px;letter-spacing:-.02em}
+.kpi span{color:var(--muted);font-size:13px}
+.kpi.alerta b{color:var(--bad)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.tabs{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:3px}
+.tabs button{border:0;background:transparent;padding:6px 12px;border-radius:7px;color:var(--muted)}
+.tabs button.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+input,select{font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 10px}
+input[type=search]{flex:1;min-width:180px}
+.lista{display:grid;gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+.card.warn{border-left-color:var(--warn)}.card.bad{border-left-color:var(--bad)}.card.ok{border-left-color:var(--ok)}
+.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-start}
+.id{font-family:"JetBrains Mono",monospace;font-size:14px;font-weight:500}
+.mod{color:var(--muted);font-size:13px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;padding:2px 9px;border-radius:99px;background:var(--surface2);border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.chip.ok{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.chip.warn{background:var(--warn-soft);color:var(--warn);border-color:transparent}
+.chip.bad{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.chip.info{background:var(--info-soft);color:var(--info);border-color:transparent}
+.chip.acc{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.fin{margin:8px 0 10px}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px 16px;font-size:13px}
+.meta div{min-width:0;overflow-wrap:anywhere}
+.meta div span{display:block;color:var(--muted);font-size:12px}
+.ultimo{margin-top:12px;padding:10px 12px;background:var(--surface2);border-radius:8px;font-size:14px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.ultimo .quando{font-weight:600;white-space:nowrap}
+details{margin-top:8px}
+summary{cursor:pointer;color:var(--accent);font-size:13px}
+ol.tl{list-style:none;margin:10px 0 0;padding:0 0 0 14px;border-left:2px solid var(--line)}
+ol.tl li{position:relative;padding:0 0 8px 10px;font-size:13.5px}
+ol.tl li::before{content:"";position:absolute;left:-20px;top:7px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+ol.tl li time{color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:12px;margin-right:6px}
+.vazio,.msg{text-align:center;color:var(--muted);padding:40px 10px}
+.msg.erro{color:var(--bad)}
+dialog{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--text);padding:22px;max-width:520px;width:calc(100% - 32px)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+dialog h2{margin:0 0 6px;font-size:18px}
+dialog label{display:block;font-size:13px;color:var(--muted);margin:14px 0 4px}
+dialog input{width:100%}
+dialog .acoes{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+@media (max-width:720px){.kpis{grid-template-columns:repeat(2,1fr)}h1{font-size:19px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Meus Processos</h1>
+      <div class="sub" id="sub">SVLMAT · EEL/USP</div>
+    </div>
+    <div class="btns">
+      <button id="btnAtualizar" title="Buscar dados novos da planilha">↻ Atualizar</button>
+      <button id="btnConfig" title="Configurar conexão">⚙</button>
+    </div>
+  </header>
+
+  <section class="kpis" id="kpis"></section>
+
+  <div class="toolbar">
+    <div class="tabs" id="tabs">
+      <button data-f="abertos" class="on">Em aberto</button>
+      <button data-f="fechados">Encerrados</button>
+      <button data-f="todos">Todos</button>
+    </div>
+    <select id="selAba">
+      <option value="todas">Licitações e dispensas</option>
+      <option value="Licitações">Só licitações</option>
+      <option value="Dispensas">Só dispensas</option>
+    </select>
+    <input type="search" id="busca" placeholder="Buscar demanda, finalidade, SEI, fornecedor…">
+  </div>
+
+  <main class="lista" id="lista"><div class="msg">Carregando…</div></main>
+</div>
+
+<dialog id="dlg">
+  <h2>Conectar à planilha</h2>
+  <div class="sub">Os dados ficam salvos só neste navegador.</div>
+  <label for="inUrl">URL do Apps Script (termina em /exec)</label>
+  <input id="inUrl" placeholder="https://script.google.com/macros/s/…/exec">
+  <label for="inChave">Chave de acesso</label>
+  <input id="inChave" type="password" placeholder="A mesma definida em CONFIG.CHAVE">
+  <div class="acoes">
+    <button id="btnCancelar">Cancelar</button>
+    <button class="primary" id="btnSalvar">Salvar e carregar</button>
+  </div>
+</dialog>
+
+<script>
+const MODS = {AD:'Adiantamento',CC:'Concorrência',CC_AC:'Concorrência – Acréscimos',DL_I:'Dispensa – Inc. I (engenharia)',DL_II:'Dispensa – Inc. II (valor)',DL_IIIa:'Dispensa – Inc. III, a (deserta)',DL_IIIb:'Dispensa – Inc. III, b (fracassada)',DL_IVa:'Dispensa – Inc. IV, a (garantia)',DL_IVc:'Dispensa – Inc. IV, c (pesquisa)',DL_AC:'Dispensa – Acréscimos',EXT:'Adesão a licitação externa',INEX_I:'Inexigibilidade – Inc. I',INEX_IIIa:'Inexigibilidade – Inc. III, a',INEX_IIIb:'Inexigibilidade – Inc. III, b',INEX_IIIc:'Inexigibilidade – Inc. III, c',INEX_IIId:'Inexigibilidade – Inc. III, d',INEX_IIIf:'Inexigibilidade – Inc. III, f (treinamento)',INEX_AC:'Inexigibilidade – Acréscimos',PR:'Pregão Eletrônico',PR_AC:'Pregão – Acréscimos',PR_RP:'Pregão – Registro de Preços'};
+const FECHADOS = ['concluído','cancelado','anulado','revogado','fracassado','deserto','transferido'];
+const ALERTA = 15, CRITICO = 30;           // dias sem movimentação
+const LS = {url:'mp_url', chave:'mp_chave'};
+const $ = s => document.querySelector(s);
+const hoje = new Date(); hoje.setHours(0,0,0,0);
+let estado = {dados:[], filtro:'abertos', aba:'todas', busca:''};
+
+function lsGet(k){try{return localStorage.getItem(k)||''}catch(e){return ''}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const brl = n => n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const fmtData = d => d.toLocaleDateString('pt-BR');
+
+/* "63.638,85" → 63638.85 ; aceita várias linhas (um valor por empenho) e soma */
+function num(s){
+  if(!s) return 0;
+  return String(s).split(/\n/).reduce((a,x)=>{
+    x = x.replace(/[^\d,.-]/g,''); if(!x) return a;
+    const k = x.lastIndexOf(',');
+    x = k>=0 ? x.slice(0,k).replace(/[.,]/g,'')+'.'+x.slice(k+1) : x.replace(/\./g,'');
+    return a + (parseFloat(x)||0);
+  },0);
+}
+
+/* Quebra o Histórico em eventos datados. Datas sem ano são resolvidas de trás
+   para frente: a mais recente é a última ocorrência dela até hoje, e as
+   anteriores recuam um ano sempre que o calendário "vira" (ex.: 15/01 ← 09/12). */
+function parseHist(txt){
+  txt = String(txt||'');
+  const re = /(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\s*(?::|-|–)\s*/g;
+  const ms = [...txt.matchAll(re)].filter(m=> +m[2]>=1 && +m[2]<=12 && +m[1]>=1 && +m[1]<=31);
+  const brutos = ms.map((m,i)=>({
+    d:+m[1], mo:+m[2],
+    ano: m[3] ? (m[3].length===2 ? 2000 + +m[3] : +m[3]) : null,
+    texto: txt.slice(m.index+m[0].length, i+1<ms.length ? ms[i+1].index : txt.length).replace(/\s+/g,' ').trim()
+  }));
+  let prox = null;
+  for(let i=brutos.length-1; i>=0; i--){
+    const e = brutos[i]; let ano = e.ano;
+    if(ano==null){
+      if(prox){ ano = prox.getFullYear(); if(new Date(ano,e.mo-1,e.d) > prox) ano--; }
+      else { ano = hoje.getFullYear(); if(new Date(ano,e.mo-1,e.d) > hoje) ano--; }
+    }
+    e.data = new Date(ano, e.mo-1, e.d);
+    prox = e.data;
+  }
+  return brutos.filter(e=>e.texto && !isNaN(e.data)).map(e=>({data:e.data, texto:e.texto}));
+}
+
+function preparar(p){
+  const status = String(p['Status']||'').trim();
+  p.aberto = !FECHADOS.includes(status.toLowerCase());
+  p.eventos = parseHist(p['Histórico']);
+  p.ultimo = p.eventos.length ? p.eventos.reduce((a,b)=> b.data>=a.data ? b : a) : null;
+  p.dias = p.ultimo ? Math.round((hoje - p.ultimo.data)/864e5) : null;
+  p.vPrev = num(p['Valor Previsto']); p.vRef = num(p['Valor Referencial']); p.vEf = num(p['Valor Efetivado']);
+  p.busca = Object.values(p).filter(v=>typeof v==='string').join(' ').toLowerCase();
+  return p;
+}
+
+function classeStatus(p){
+  const s = String(p['Status']).toLowerCase();
+  if(s==='concluído') return 'ok';
+  if(['suspenso','recurso','fracassado','deserto','cancelado','anulado','revogado'].includes(s)) return 'bad';
+  if(s==='em mãos') return 'warn';
+  return 'acc';
+}
+function classeIdade(p){
+  if(!p.aberto) return 'ok';
+  if(p.dias==null) return 'warn';
+  return p.dias>=CRITICO ? 'bad' : p.dias>=ALERTA ? 'warn' : '';
+}
+function textoDias(d){ return d==null ? 'sem data' : d===0 ? 'hoje' : d===1 ? 'há 1 dia' : `há ${d} dias`; }
+
+function renderKpis(){
+  const meus = estado.dados.filter(p=>p.vinculo==='responsavel');
+  const abertos = meus.filter(p=>p.aberto);
+  const parados = abertos.filter(p=>p.dias==null || p.dias>=ALERTA);
+  const valorAberto = abertos.reduce((a,p)=>a+(p.vRef||p.vPrev),0);
+  const concl = meus.filter(p=>String(p['Status']).toLowerCase()==='concluído');
+  const ef = concl.reduce((a,p)=>a+p.vEf,0);
+  $('#kpis').innerHTML = `
+    <div class="kpi"><b>${abertos.length}</b><span>em aberto sob sua responsabilidade</span></div>
+    <div class="kpi ${parados.length?'alerta':''}"><b>${parados.length}</b><span>parados há ${ALERTA}+ dias</span></div>
+    <div class="kpi"><b>${brl(valorAberto).replace(',00','')}</b><span>estimado em aberto</span></div>
+    <div class="kpi"><b>${concl.length}</b><span>concluídos · ${brl(ef).replace(',00','')} empenhados</span></div>`;
+}
+
+function card(p){
+  const mod = MODS[p['Mod']] || p['Mod'] || '';
+  const nmod = p['Nº Mod'] ? ` nº ${esc(p['Nº Mod'])}` : '';
+  const crit = String(p['Criticidade']||'').toLowerCase();
+  const chips = [
+    `<span class="chip ${classeStatus(p)}">${esc(p['Status']||'—')}</span>`,
+    p.vinculo==='citado' ? `<span class="chip info" title="Responsável: ${esc(p['Responsável'])}">Você no histórico · resp. ${esc(p['Responsável'])}</span>` : '',
+    crit==='alta' ? `<span class="chip bad">Criticidade alta</span>` : '',
+    String(p['Prioridade']).toLowerCase()==='alta' ? `<span class="chip warn">Prioridade alta</span>` : ''
+  ].join('');
+  const meta = [
+    ['Processo SEI', p['Nº Processo USP/SEI']], ['Nº DC', p['Nº DC']], ['C. Gerencial', p['C. Gerencial']],
+    ['Previsto', p.vPrev ? brl(p.vPrev) : ''], ['Referencial', p.vRef ? brl(p.vRef) : ''],
+    ['Efetivado', p.vEf ? brl(p.vEf) : ''], ['Nº NE', String(p['Nº NE']||'').split(/\n/).filter(Boolean).join(', ')]
+  ].filter(([,v])=>v).map(([k,v])=>`<div><span>${k}</span>${esc(v)}</div>`).join('');
+  const ult = p.ultimo
+    ? `<div class="ultimo"><span class="quando">${fmtData(p.ultimo.data)} · ${textoDias(p.dias)}</span><span>${esc(p.ultimo.texto)}</span></div>`
+    : `<div class="ultimo"><span>Sem movimentação registrada no histórico.</span></div>`;
+  const tl = p.eventos.length>1 ? `<details><summary>Histórico completo (${p.eventos.length})</summary><ol class="tl">${
+    [...p.eventos].reverse().map(e=>`<li><time>${fmtData(e.data)}</time>${esc(e.texto)}</li>`).join('')}</ol></details>` : '';
+  return `<article class="card ${classeIdade(p)}">
+    <div class="top"><div><div class="id">${esc(p['Demanda'])}</div><div class="mod">${esc(mod)}${nmod}</div></div><div class="chips">${chips}</div></div>
+    <div class="fin">${esc(p['Finalidade'])}</div>
+    <div class="meta">${meta}</div>${ult}${tl}</article>`;
+}
+
+function render(){
+  renderKpis();
+  const q = estado.busca.trim().toLowerCase();
+  let l = estado.dados.filter(p=>
+    (estado.filtro==='todos' || (estado.filtro==='abertos' ? p.aberto : !p.aberto)) &&
+    (estado.aba==='todas' || p.aba===estado.aba) &&
+    (!q || p.busca.includes(q)));
+  l.sort((a,b)=> a.aberto!==b.aberto ? (a.aberto?-1:1)
+    : a.aberto ? ((b.dias??9999)-(a.dias??9999))
+    : ((b.ultimo?.data||0)-(a.ultimo?.data||0)));
+  $('#lista').innerHTML = l.length ? l.map(card).join('') : `<div class="vazio">Nenhum processo neste filtro.</div>`;
+}
+
+function setMsg(t, erro){ $('#lista').innerHTML = `<div class="msg ${erro?'erro':''}">${esc(t)}</div>`; }
+
+function aplicar(json){
+  estado.dados = (json.processos||[]).map(preparar);
+  const quando = json.atualizadoEm ? new Date(json.atualizadoEm) : new Date();
+  $('#sub').textContent = `SVLMAT · EEL/USP · ${json.nome||''} · atualizado ${quando.toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'})}`;
+  render();
+}
+
+async function carregar(){
+  if(window.DEMO){ aplicar(window.DEMO); return; }
+  const url = lsGet(LS.url), chave = lsGet(LS.chave);
+  if(!url){ setMsg('Configure a conexão com a planilha no botão ⚙.'); abrirConfig(); return; }
+  setMsg('Buscando dados da planilha…');
+  try{
+    const r = await fetch(url + (url.includes('?')?'&':'?') + 'chave=' + encodeURIComponent(chave));
+    const j = await r.json();
+    if(j.erro) throw new Error(j.erro);
+    aplicar(j);
+  }catch(e){ setMsg('Não foi possível carregar: ' + e.message + ' Confira a URL e a chave no botão ⚙.', true); }
+}
+
+function abrirConfig(){ $('#inUrl').value = lsGet(LS.url); $('#inChave').value = lsGet(LS.chave); $('#dlg').showModal(); }
+$('#btnConfig').onclick = abrirConfig;
+$('#btnCancelar').onclick = ()=>$('#dlg').close();
+$('#btnSalvar').onclick = ()=>{ lsSet(LS.url,$('#inUrl').value.trim()); lsSet(LS.chave,$('#inChave').value.trim()); $('#dlg').close(); carregar(); };
+$('#btnAtualizar').onclick = carregar;
+$('#tabs').onclick = e=>{ const b=e.target.closest('button'); if(!b) return;
+  estado.filtro=b.dataset.f; [...$('#tabs').children].forEach(x=>x.classList.toggle('on',x===b)); render(); };
+$('#selAba').onchange = e=>{ estado.aba=e.target.value; render(); };
+$('#busca').oninput = e=>{ estado.busca=e.target.value; render(); };
+setInterval(()=>{ if(!document.hidden && !window.DEMO) carregar(); }, 10*60*1000);
+carregar();
+</script>
+</body>
+</html>
